@@ -1,0 +1,37 @@
+<!-- todo should this rowHeight be dynamic? -->
+<md-grid-list [cols]="tilesColSize" rowHeight="390px" (window:resize)="adjustTileColSize($event['target']['innerWidth'])">
+  <md-grid-tile *ngFor="let tile of tiles; let i = index;" [colspan]="( (tile?.col | customTranslate)  > tilesColSize) ? tilesColSize : (tile?.col | customTranslate)"
+    [rowspan]="(tile?.row | customTranslate )" [style.background-color]="findTileColor(i + 1)">
+
+    <!-- @todo this markup could probably be slimmed down from so many
+    Foundation flex-classes -->
+    <div class="tile-content flex-container flex-dir-column">
+      <div class="ke-banner-image-container">
+        <img class="ke-banner-image" [attr.src]="tile.image ? tile.image : ''">
+      </div>
+      <div class="ke-block-content flex-container flex-dir-column">
+        <div class="text-content flex-child-grow flex-container flex-dir-column">
+          <div class="label">
+            <h3>{{tile?.group | customTranslate}}</h3>
+          </div>
+          <div *ngIf="tile?.title" class="title">
+            <h2>{{tile?.title | customTranslate}}</h2>
+          </div>
+          <div class="description flex-child-grow">
+            <p Markdown *ngIf="tile.teaser">{{tile?.teaser | customTranslate}}</p>
+            <p Markdown *ngIf="!tile.teaser && tile.description">{{tile?.description | customTranslate}}</p>
+          </div>
+        </div>
+        <div class="link">
+          <app-modal *ngIf="tile.type !== 'FAQCard'" [modalContent]="tile">Loading...</app-modal>
+          <a routerLink="faqs" *ngIf="tile.type === 'FAQCard'" class="absolute-cover">
+            <span class="ke-block-content absolute-bottom">{{ 'readMore' | translate }}
+              <span class="icon icon--small icon--arrow-right"></span>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </md-grid-tile>
+</md-grid-list>

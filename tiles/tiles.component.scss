@@ -1,0 +1,40 @@
+@import 'settings';
+@import 'base/index';
+
+// Tiles (Grid list from Angular Material).
+
+// Tile content.
+// These styles are relating only to the content of the tile and possibly
+// should be moved somewhere else if the tile is separated into it's own component.
+.mat-grid-tile {
+  &,
+  a {
+    color: $ke-white;
+  }
+}
+
+.tile-content {
+  width: 100%;  
+  height: 100%;
+
+  > * {
+    position: relative;
+  }
+
+  .text-content {
+    // Allows space at the bottom for the absolutely positioned read-more link.
+    padding-bottom: $global-lineheight + 2 * $global-padding;
+  }
+}
+
+.description {
+  overflow: hidden;
+
+  p {
+    max-height: 0;
+  }
+}
+
+.link {
+  font-weight: bold;
+}

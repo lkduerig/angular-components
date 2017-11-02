@@ -1,0 +1,35 @@
+@import 'settings';
+@import 'base/index';
+
+$mat-dialog-height: 65vh; // aligns with Angular material default dialog min-height value.
+
+// Dialog.
+a {
+  color: $ke-white;
+}
+
+.ke-block-content {
+  a {
+    color: $ke-orange;
+  }
+}
+
+.mat-dialog-content {
+  @include breakpoint('medium') {
+    min-height: $mat-dialog-height;
+  }
+
+  min-height: 100vh; // make the modal full-screen on mobile.
+  background-color: $light-gray;
+  -ms-overflow-style: none;  // hides scrollbar on IE 10+
+}
+
+.mat-dialog-actions {
+  padding: 0;
+}
+
+// hides webkit browser's scrollbar
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent; /* make scrollbar transparent */
+}

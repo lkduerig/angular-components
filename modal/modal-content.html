@@ -1,0 +1,63 @@
+<md-dialog-content>
+  <md-toolbar color="primary">
+    <button md-icon-button class="invisible"><md-icon>close</md-icon></button>
+    <h3 class="flex-child-grow text-center">{{modalContent?.group | customTranslate}}</h3>
+    <button md-icon-button md-dialog-close><md-icon>close</md-icon></button>
+  </md-toolbar>
+
+  <h3 class="ke-region ke-region--header row align-middle ke-content text-center">
+    <div class="column small-1">
+      <img src="/assets/images/orange-kesko-logo-nav.png" alt="" class="ke-logo-img">
+    </div>
+    <div class="column small-10">{{modalContent?.title | customTranslate}}</div>
+  </h3>
+
+  <div class="ke-block-content">
+    <div Markdown>
+      {{modalContent?.description | customTranslate}}
+    </div>
+    <md-dialog-actions class="row column align-center">
+      <!-- @TODO put localized data  -->
+
+      <ng-template [ngIf]="modalContent.type === 'GeneralCard' && modalContent.url">
+        <button md-raised-button md-dialog-close (click)="navigateToExternalLink(modalContent.url)" color="accent">
+          <!-- @todo this is a placeholder until we have the localized string. -->
+          {{'Lue lisää'}}
+        </button>
+      </ng-template>
+
+      <ng-template [ngIf]="modalContent.type === 'FAQCard'">
+        <button md-raised-button md-dialog-close (click)="navigateToCardLinkedContent()" color="accent">
+          <!-- @todo this is a placeholder until we have the localized string. -->
+          {{'Lue lisää'}}
+        </button>
+      </ng-template>
+
+      <ng-template [ngIf]="modalContent.type === 'Error'">
+        <button md-raised-button md-dialog-close color="accent">
+          {{'close' | translate}}
+        </button>
+      </ng-template>
+
+      <ng-template [ngIf]="modalContent.type === 'RequestCard'">
+        <button *ngIf="modalContent.url; else elseBlock" md-raised-button md-dialog-close (click)="navigateToExternalLink(modalContent.url)"
+          color="accent">
+          <!-- @todo this is a placeholder until we have the localized string. -->
+          {{'Lue lisää'}}
+        </button>
+        <ng-template #elseBlock>
+          <button md-raised-button md-dialog-close (click)="navigateToCardLinkedContent()" color="accent">
+            {{'FindRegisters' | translate}}
+          </button>
+        </ng-template>
+      </ng-template>
+    </md-dialog-actions>
+
+    <md-dialog-actions class="row column align-center" *ngIf="modalContent.type === 'RequestCard' && modalContent.url">
+      <button class="mat-button mat-accent" md-dialog-close (click)="navigateToCardLinkedContent()">
+        {{'FindRegisters' | translate}}
+      </button>
+    </md-dialog-actions>
+
+  </div>
+</md-dialog-content>
